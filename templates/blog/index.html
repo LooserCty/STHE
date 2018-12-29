@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}Posts{% endblock %}
+
+
+
+{% block body %}
+<h1>Posts</h1>
+{% if g.user %}
+<a class="action" href="{{ url_for('blog.create') }}">New</a>
+{% endif %}
+{% for post in posts %}
+<article class="post">
+    <header>
+        <div>
+            <h1>{{ post['title'] }}</h1>
+            <div class="about">by {{ post['username'] }} on {{
+                post['created'].strftime('%Y-%m-%d') }}</div>
+        </div>
+        {% if g.user['id'] == post['author_id'] %}
+        <a class="action" href="{{ url_for('blog.update', id=post['id']) }}">Edit</a>
+        {% endif %}
+    </header>
+    <p class="body">{{ post['body'] }}</p>
+</article>
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+
+
+<div style="width:1000px; height:200px; overflow:scroll;">
+    <table border="1" rules="all" style="width:2000px; height:100px;
+        text-align:center">
+        <tr>
+            <th>ID</th>
+            <th>标题</th>
+            <th>简介</th>
+            <th>作者</th>
+            <th>库存</th>
+            <th>价格</th>
+            <th>销量</th>
+            <th>备注</th>
+            <th>阅读数</th>
+            <th>点赞数</th>
+            <th>收藏数</th>
+            <th>评论数</th>
+            <th>发布时间</th>
+            <th>修改时间</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>这是一篇标题很长的文章用来测试表格的测试标题</td>
+            <td>这是一篇标题很长的文章用来测试表格不被太多列挤得变形的描述...</td>
+            <td>管理员</td>
+            <td>3000</td>
+            <td>120.68</td>
+            <td>1200</td>
+            <td>测试啊测试test</td>
+            <td>123</td>
+            <td>20</td>
+            <td>17</td>
+            <td>5</td>
+            <td>2018-03-06 12:00:00</td>
+            <td>2018-03-07 15:00:00</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>这是一篇标题很长的文章用来测试表格的测试标题</td>
+            <td>这是一篇标题很长的文章用来测试表格不被太多列挤得变形的描述...</td>
+            <td>管理员</td>
+            <td>3000</td>
+            <td>120.68</td>
+            <td>1200</td>
+            <td>测试啊测试test</td>
+            <td>123</td>
+            <td>20</td>
+            <td>17</td>
+            <td>5</td>
+            <td>2018-03-06 12:00:00</td>
+            <td>2018-03-07 15:00:00</td>
+        </tr>
+
+    </table>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>1</th>
+            <th>2</th>
+            <th>3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td scope="row">1</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td scope="row">1</td>
+            <td>1</td>
+            <td>1</td>
+        </tr>
+    </tbody>
+</table>
+
+{% endblock %}

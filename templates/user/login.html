@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock %}
+
+{% block body %}
+<h1>登录</h1>
+
+<form method="post">
+    <!-- <label for="username">Username</label>
+    <input name="username" id="username" required>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" required>
+    <input type="submit" value="Log In"> -->
+
+    <tr>
+        <th>Username</th>
+        <th><input name="username" id="username" required></th>
+        <th>Password</th>
+        <th><input type="password" name="password" id="password" required></th>
+        <th><input type="submit" value="登录"></th>
+    </tr>
+
+
+</form>
+
+
+{% endblock %}

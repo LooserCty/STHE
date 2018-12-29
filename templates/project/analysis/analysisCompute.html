@@ -1,0 +1,153 @@
+{% extends 'base.html' %}
+
+{% block title %}新建工程{% endblock %}
+
+{% block body %}
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.data',mode=1) }}">数据模块</a>
+        </li>
+        <li class="breadcrumb-item active">
+            分析模块
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#">结果模块</a>
+        </li>
+    </ol>
+</nav>
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+            计算分析
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.analysis',mode=2) }}">分析依据</a>
+        </li>
+    </ol>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success alert-dismissable">
+
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                    ×
+                </button>
+                <h4>
+                    提示!
+                </h4>
+                输入时间与环号，点击计算可得到该环衬砌健康状态。
+                </br>
+                <strong>注意!</strong> 你需要检查输入的时间与环号是否存在。
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form role="form" method="POST">
+        <div class="form-group">
+            <label for="date">
+                数据采集时间
+            </label>
+            <input type="date" class="form-control" name="date" id="date" required />
+        </div>
+
+        <div class="form-group">
+            <label for="ringNum">
+                衬砌环号
+            </label>
+            <input type="number" class="form-control" name="ringNum" id="ringNum" required />
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            计算
+        </button>
+    </form>
+</div>
+
+{% if data %}
+<div class="container-fluid">
+    </br>
+    <h4>单因素评价结果</h4>
+    <table class="table">
+        <thead>
+            <tr class="table-warning">
+                <th>病害</th>
+                {% for index in data['one'][0] %}
+                <th>{{ index }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-active">
+                <td scope="row">健康级别</td>
+                {% for index in data['one'][1] %}
+                <th>{{ index }}</th>
+                {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="container-fluid">
+    </br>
+    <h4>综合评价结果</h4>
+    <table class="table">
+        <thead>
+            <tr class="table-warning">
+                <th>健康级别</th>
+                {% for index in range(1,5) %}
+                <th>{{ index }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-active">
+                <td scope="row">隶属度</td>
+                {% for index in data['all'][0] %}
+                <th>{{ index }}</th>
+                {% endfor %}
+            </tr>
+
+        </tbody>
+    </table>
+
+    
+    <table class="table">
+
+        <tbody>
+            <tr class="table-warning">
+                <td scope="row"></td>
+                <td>
+                    <label for="none">综合评价值</label>
+                </td>
+                <td>
+                    <label for="value">{{ data['all'][1] }}</label>
+                </td>
+            </tr>
+            <tr class="table-active">
+                <td scope="row"></td>
+                <td>
+                    <label for="none">综合评价等级</label>
+                </td>
+                <td>
+                    <label for="value">{{ data['all'][2] }}</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+{% endif %}
+
+
+
+
+{% endblock %}

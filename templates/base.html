@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html>
+
+
+    <head>
+        <title>{% block title %}{% endblock %} - STHE</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+            href="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/css/bootstrap.min.css">
+        <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+        <script
+            src="https://cdn.staticfile.org/popper.js/1.12.5/umd/popper.min.js"></script>
+        <script
+            src="https://cdn.staticfile.org/twitter-bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <!-- DataTables CSS -->
+        <link rel="stylesheet" type="text/css"
+            href="http://cdn.datatables.net/1.10.15/css/jquery.dataTables.css">
+        <!-- jQuery -->
+        <script type="text/javascript" charset="utf8"
+            src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <!-- DataTables -->
+        <script type="text/javascript" charset="utf8"
+            src="http://cdn.datatables.net/1.10.15/js/jquery.dataTables.js"></script>
+        <!-- <script type="text/javascript" charset="utf8"
+            src="../static/js/1.js"></script> -->
+    </head>
+
+    <body>
+
+        {% if g.user %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>
+                        盾构隧道健康状态评价系统
+                    </h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+
+                                    <button type="button" class="btn
+                                        btn-success">
+                                        个人中心
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{ url_for('user.logout') }}">
+                                        <button type="button" class="btn
+                                            btn-success">
+                                            退出
+                                        </button>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>
+                        盾构隧道健康状态评价系统
+                    </h3>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-md-6">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{
+                                        url_for('user.login') }}">
+                                        <button type="button" class="btn
+                                            btn-success">
+                                            登录
+                                        </button>
+                                    </a>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{{
+                                        url_for('user.register') }}">
+                                        <button type="button" class="btn
+                                            btn-success">
+                                            注册
+                                        </button>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+
+        {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+        {% endfor %}
+        {% block body %}{% endblock %}
+
+
+
+        {% block script %}
+
+        {% endblock %}
+
+    </body>
+
+</html>

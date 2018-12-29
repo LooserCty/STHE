@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}新建工程{% endblock %}
+
+{% block body %}
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+            数据模块
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.analysis',mode=1) }}">分析模块</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="#">结果模块</a>
+        </li>
+    </ol>
+</nav>
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">导入数据</li>
+        <li class="breadcrumb-item"><a href="{{ url_for('project.data', mode=2) }}">编辑数据</a></li>
+    </ol>
+</nav>
+
+
+
+
+<div class="container-fluid">
+    <form role="form" method="POST">
+        <div class="form-group">
+
+            <label for="date">
+                数据采集时间
+            </label>
+            <input type="date" class="form-control" name="date" id="date" required />
+        </div>
+
+        <div class="form-group">
+
+            <label for="exampleInputFile">
+                病害数据文件
+            </label>
+            <input type="file" class="form-control-file" id="dataFile" required />
+
+        </div>
+
+        <div class="form-group">
+            <a href="/static/data/dataTemplate.csv" download="dataTemplate.csv">数据模板</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            提交
+        </button>
+    </form>
+</div>
+
+
+
+{% if date %}
+<div class="container-fluid">
+
+    <div class="form-group">
+        <label for="date">
+            数据采集时间
+        </label>
+        <input type="date" class="form-control" name="date" id="date" required value={{ date }} />
+    </div>
+
+    <span>病害数据表格</span>
+
+    <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                {% for head in data['heads'] %}
+                <th>
+                    {{ head }}
+                </th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in range(dataSum) %}
+            <tr>
+                {% for head in data['heads'] %}
+                <th>
+                    {{ data['datas'][head][i] }}
+                </th>
+                {% endfor %}
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').dataTable();
+        });
+    </script>
+</div>
+
+{% endif %}
+
+{% endblock %}

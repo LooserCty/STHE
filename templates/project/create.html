@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block title %}新建工程{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid">
+    <header>
+        工程信息
+    </header>
+    <form role="form" method="post">
+        <div class="form-group">
+            <label for="projectName">
+                工程名称
+            </label>
+            <input class="form-control" name="projectName" id="projectName"
+                required/>
+        </div>
+        <div class="form-group">
+            <label for="Desc">
+                工程描述
+            </label>
+            <input class="form-control" name="projectDesc" id="projectDesc"
+                required/>
+        </div>
+        <div class="form-group">
+            <label for="depth">
+                埋深
+            </label>
+            <input type="number" class="form-control" name="depth" id="depth" step="0.01"
+                required/>
+        </div>
+        <div class="form-group">
+            <label for="Desc">
+                外径
+            </label>
+            <input type="number" class="form-control" name="projectDesc" step="0.01"
+                id="projectDesc" required/>
+        </div>
+        <div class="form-group">
+            <label for="Desc">
+                内径
+            </label>
+            <input type="number" class="form-control" name="projectDesc" step="0.01"
+                id="projectDesc" required/>
+        </div>
+        <div class="form-group">
+            <label for="Desc">
+                管片长度
+            </label>
+            <input type="number" class="form-control" name="projectDesc" step="0.01"
+                id="projectDesc" required/>
+        </div>
+        <div class="form-group">
+            <label for="Desc">
+                混凝土设计强度
+            </label>
+            <input type="number" class="form-control" name="projectDesc" step="0.01"
+                id="projectDesc" required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+            提交
+        </button>
+    </form>
+</div>
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+
+{% block title %}
+盾构隧道健康状态评价系统
+{% endblock %}
+
+
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            我的工程
+        </div>
+        <div class="col-md-6">
+            {% if g.user %}
+            <a class="action" href="{{ url_for('project.create') }}">新建工程</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+<ul class="list-group list-project">
+    {% for project in projects %}
+    <li>
+        <a href="{{ url_for('project.data',mode=1) }}"
+            target="_blank">
+
+            <div class="project_title">
+                <h4 class="title">{{ project['name'] }}</h4>
+            </div>
+
+            <div class="project_desc">
+                {{ project['desc'] }}
+            </div>
+            <div class="project_data">
+                <span>{{ project['time'] }}</span>
+            </div>
+        </a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+
+<nav>
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="#">Previous</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">4</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">5</a>
+        </li>
+        <li class="page-item">
+            <a class="page-link" href="#">Next</a>
+        </li>
+    </ul>
+</nav>
+
+<table id="projectTable" class="display" cellspacing="0" width="100%">
+    <thead>
+        <tr>
+            <th>我的工程</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for project in projects %}
+        <tr>
+            <th>
+                <a href="{{ url_for('project.data',mode=1) }}"
+                    target="_blank">
+
+                    <div class="project_title">
+                        <h4 class="title">{{ project['name'] }}</h4>
+                    </div>
+
+                    <div class="project_desc">
+                        {{ project['desc'] }}
+                    </div>
+                    <div class="project_data">
+                        <span>{{ project['time'] }}</span>
+                    </div>
+                </a>
+            </th>
+        </tr>
+
+        {% endfor %}
+
+    </tbody>
+
+</table>
+
+
+
+<script>
+$(document).ready(function() {
+    $('#projectTable').dataTable();
+});
+</script>
+{% endblock %}
