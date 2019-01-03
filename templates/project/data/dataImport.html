@@ -29,7 +29,7 @@
 
 
 <div class="container-fluid">
-    <form role="form" method="POST">
+    <form role="form" method="POST" enctype="multipart/form-data">
         <div class="form-group">
 
             <label for="date">
@@ -43,7 +43,7 @@
             <label for="exampleInputFile">
                 病害数据文件
             </label>
-            <input type="file" class="form-control-file" id="dataFile" required />
+            <input type="file" class="form-control-file" name="dataFile" id="dataFile" required />
 
         </div>
 

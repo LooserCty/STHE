@@ -1,10 +1,12 @@
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
-)
+import sys
+
+from flask import (Blueprint, flash, g, redirect, render_template, request,
+                   session, url_for)
 from werkzeug.exceptions import abort
 
-from ..usr.user import login_required
+from ..db import getProjectData, setProjectData
 from ..db.db import get_db
+from ..usr.user import login_required
 
 
 def getDataByDate(date):
@@ -13,25 +15,25 @@ def getDataByDate(date):
 
 
 def dataRealize():
-    # mode：'1'为导入数据, '2'为查看、编辑数据
+    name = request.values.get('name')
+    mode = request.values.get('mode')
+    date = request.values.get('date')
+    print(request.files,file=sys.stdout)
+    file=request.files.get('dataFile',None)
+    if file:
+        print(type(file.filename),file=sys.stdout)
     if request.method == 'POST':
-        mode = request.form.get('mode')
         if mode == '1':
-            date = request.form.get('date')
             return redirect(url_for('project.data', mode=1, date=date))
         else:
-            date = request.form.get('date')
             return redirect(url_for('project.data', mode=2, date=date))
     else:
-        mode = request.args.get('mode')
         if mode == '1':
-            date = request.args.get('date')
             data = getDataByDate(date)
             data = {'heads': ['编号', '环号', '沉降'], 'datas': data}
             dataSum = 28
             return render_template('project/data/dataImport.html', date=date, data=data, dataSum=dataSum)
         else:
-            date = request.args.get('date')
             data = getDataByDate(date)
             data = {'heads': ['编号', '环号', '沉降'], 'datas': data}
             dataSum = 18

@@ -8,93 +8,55 @@
 
 {% block body %}
 <div class="container-fluid">
+    </br>
     <div class="row">
         <div class="col-md-6">
-            我的工程
-        </div>
-        <div class="col-md-6">
             {% if g.user %}
-            <a class="action" href="{{ url_for('project.create') }}">新建工程</a>
+            <div class="row">
+                <div class="col-6">
+                    <h4>
+                        我的工程
+                    </h4>
+                </div>
+                <div class="col-6">
+                    <h4>
+                        <a class="action" href="{{ url_for('project.create') }}">新建工程</a>
+                    </h4>
+                </div>
+            </div>
+
+
             {% endif %}
         </div>
     </div>
+    </br>
 </div>
 
 
-<ul class="list-group list-project">
-    {% for project in projects %}
-    <li>
-        <a href="{{ url_for('project.data',mode=1) }}"
-            target="_blank">
-
-            <div class="project_title">
-                <h4 class="title">{{ project['name'] }}</h4>
-            </div>
-
-            <div class="project_desc">
-                {{ project['desc'] }}
-            </div>
-            <div class="project_data">
-                <span>{{ project['time'] }}</span>
-            </div>
-        </a>
-    </li>
-    {% endfor %}
-</ul>
-
-
-
-<nav>
-    <ul class="pagination">
-        <li class="page-item">
-            <a class="page-link" href="#">Previous</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">1</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">2</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">3</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">4</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">5</a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#">Next</a>
-        </li>
-    </ul>
-</nav>
 
 <table id="projectTable" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
-            <th>我的工程</th>
+            <th>工程名称</th>
+            <th>工程描述</th>
+            <th>埋深</th>
+            <th>内径</th>
+            <th>外径</th>
+            <th>管片长度</th>
+            <th>砼设计强度</th>
         </tr>
     </thead>
     <tbody>
         {% for project in projects %}
-        <tr>
-            <th>
-                <a href="{{ url_for('project.data',mode=1) }}"
-                    target="_blank">
 
-                    <div class="project_title">
-                        <h4 class="title">{{ project['name'] }}</h4>
-                    </div>
-
-                    <div class="project_desc">
-                        {{ project['desc'] }}
-                    </div>
-                    <div class="project_data">
-                        <span>{{ project['time'] }}</span>
-                    </div>
-                </a>
-            </th>
+        <tr onclick="myfunction(this)">
+            <!-- <a href="{{ url_for('project.data', name=project['name'], mode=1) }}" target="_blank"> -->
+            {% for data in project %}
+            <td>
+                {{ data }}
+            </td>
+            {% endfor %}
+            <!-- </a> -->
         </tr>
 
         {% endfor %}
@@ -103,11 +65,16 @@
 
 </table>
 
-
-
 <script>
-$(document).ready(function() {
-    $('#projectTable').dataTable();
-});
+    $(document).ready(function () {
+        $('#projectTable').dataTable();
+    });
+
+    function myfunction(obj) {
+        var w = window.open();
+        var name = obj.children[0].innerText;
+        w.location = "data?name=" + name + "&mode=1";
+    }
 </script>
+
 {% endblock %}

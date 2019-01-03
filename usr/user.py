@@ -1,10 +1,10 @@
+import sys
 import functools
 
-from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
-)
+from flask import (Blueprint, flash, g, redirect, render_template, request, json, jsonify,
+                   session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
- 
+
 from ..db.db import get_db
 
 bp = Blueprint('user', __name__, url_prefix='/user')
@@ -66,6 +66,8 @@ def login():
     return render_template('user/login.html')
 
 
+####### !!!!!!!!!!!!!!!!
+####### 确保每次请求被刷新的g中仍有用户信息，session不会刷新为啥不直接使用？因为信息安全？
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id')
@@ -93,3 +95,10 @@ def login_required(view):
         return view(**kwargs)
 
     return wrapped_view
+
+
+@bp.route('/loginq', methods=['POST'])
+def loginq():
+    data = request.get_data()
+    print(data, file=sys.stdout)
+    return True

@@ -14,7 +14,6 @@ def get_db():
         g.db.row_factory = sqlite3.Row
     return g.db
 
-
 def close_db(e=None):
     db = g.pop('db', None)
     if db is not None:
@@ -34,12 +33,23 @@ def init_db_command():
 @with_appcontext
 def create_table_user_command():
     db = get_db()
-    with current_app.open_resource('schema.sql') as f:
+    with current_app.open_resource('db/user.sql') as f:
         db.executescript(f.read().decode('utf8'))
     click.echo('Create the table user.')
 
 
+@click.command('create_table_project')
+@with_appcontext
+def create_table_project_command():
+    db = get_db()
+    with current_app.open_resource('db/project.sql') as f:
+        db.executescript(f.read().decode('utf8'))
+    click.echo('Create the table project.')
+
+
 def init_app(app):
     app.teardown_appcontext(close_db)
+    # app.teardown_request(close_db)
     app.cli.add_command(init_db_command)
     app.cli.add_command(create_table_user_command)
+    app.cli.add_command(create_table_project_command)

@@ -34,8 +34,7 @@ def create_app(test_config=None):
     app.register_blueprint(blog.bp)
     app.add_url_rule('/', endpoint='index')
 
-    from .data import getProjectData
-    app.register_blueprint(getProjectData.bp)
+
 
     from .project import project
     app.register_blueprint(project.bp)
