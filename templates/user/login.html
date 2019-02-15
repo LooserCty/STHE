@@ -1,55 +1,26 @@
 {% extends 'base.html' %}
 
-{% block title %}Log In{% endblock %}
+{% block title %}登录{% endblock %}
 
 {% block body %}
 <h1>登录</h1>
 
 <form method="post">
-    <!-- <label for="username">Username</label>
+    <label for="username">用户名</label>
     <input name="username" id="username" required>
-    <label for="password">Password</label>
+    <label for="password">密码</label>
     <input type="password" name="password" id="password" required>
-    <input type="submit" value="Log In"> -->
+    <input type="submit" value="登录">
 
-    <tr>
+    <!-- <tr>
         <th>Username</th>
         <th><input name="username" id="username" required></th>
         <th>Password</th>
         <th><input type="password" name="password" id="password" required></th>
         <th><input type="submit" value="登录"></th>
-    </tr>
+    </tr> -->
 
 </form>
 
-
-
-<a href="#" onclick="myfunction()">yyy</a>
-<p id='qq'></p>
-
-
-<script>
-    function myfunction() {
-        data = {
-            name = "tt",
-            pass = "ttt"
-        };
-        $.ajax({
-            // url: "{{ url_for('user.loginq') }}",
-            url: '/user/loginq',
-            type: "POST",
-            data: data,
-            contentType: 'application/json; charset=UTF-8',
-            dataType: 'json',
-            success: function (data) {
-                alert(data);
-            },
-            error: function (xhr, type) {
-                alert('error');
-            }
-        });
-        $('.qq').text('RSTJSRTJ');
-    }
-</script>
 
 {% endblock %}

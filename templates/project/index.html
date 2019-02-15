@@ -73,8 +73,16 @@
     function myfunction(obj) {
         var w = window.open();
         var name = obj.children[0].innerText;
-        w.location = "data?name=" + name + "&mode=1";
+        w.location = "./data?name=" + name + "&mode=1";
+        // var data = {
+        //     haha: 'tt',
+        //     hhh: 'ttt'
+        // };
+        // w.location = "data?" + $.param(data);
     }
 </script>
+
+
+
 
 {% endblock %}

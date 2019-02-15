@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}新建工程{% endblock %}
+{% block title %}
+计算依据
+{% endblock %}
 
 {% block body %}
 
 <nav>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ url_for('project.data',mode=1) }}">数据模块</a>
+            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
         </li>
         <li class="breadcrumb-item active">
             分析模块
@@ -21,7 +23,7 @@
 <nav>
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
-            <a href="{{ url_for('project.analysis',mode=1) }}">计算分析</a>
+            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">计算分析</a>
         </li>
         <li class="breadcrumb-item active">
             分析依据

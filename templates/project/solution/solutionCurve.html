@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ datas['name'] }}
+{% endblock %}
+
+{% block body %}
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+        </li>
+        <li class="breadcrumb-item active">
+            结果模块
+        </li>
+    </ol>
+</nav>
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果展示</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=2) }}">结果数据</a>
+        </li>
+        <li class="breadcrumb-item active">
+            变化曲线
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
+        </li>
+    </ol>
+</nav>
+
+
+
+
+
+
+<div class="btn-group">
+    <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-left"></em> 左</button>
+    <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-center"></em> 中</button>
+    <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-right"></em> 右</button>
+    <button class="btn btn-default" type="button"><em class="glyphicon glyphicon-align-justify"></em> 全</button>
+</div>
+
+
+
+
+
+
+
+
+
+{% endblock %}

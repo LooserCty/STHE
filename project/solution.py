@@ -1,3 +1,6 @@
+import sys
+import pandas
+
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, url_for
 )
@@ -7,32 +10,29 @@ from ..usr.user import login_required
 from ..db.db import get_db
 
 
-def getDataByDate(date):
-    d = {'编号': list(range(28)), '环号': list(range(28)), '沉降': list(range(28))}
-    return d
-
 
 def solutionRealize():
-    # mode：'1'为导入数据, '2'为查看、编辑数据
+    # mode：'1'为评价结果, '2'为评价数据,'3'为分析报告,'4'为评价变化曲线
+    name = request.values.get('name')
+    mode = request.values.get('mode')
+    datas = {}
+    datas['name'] = name
+    print(request.values, file=sys.stdout)
     if request.method == 'POST':
-        mode = request.form.get('mode')
         if mode == '1':
-            date = request.form.get('date')
-            return redirect(url_for('project.data', mode=1, date=date))
+            return redirect(url_for('project.solution', name=name, mode=1))
+        elif mode == '2':
+            return redirect(url_for('project.solution', name=name, mode=2))
+        elif mode == '3':
+            return redirect(url_for('project.solution', name=name, mode=3))
         else:
-            date = request.form.get('date')
-            return redirect(url_for('project.data', mode=2, date=date))
+            return redirect(url_for('project.solution', name=name, mode=4))
     else:
-        mode = request.args.get('mode')
         if mode == '1':
-            date = request.args.get('date')
-            data = getDataByDate(date)
-            data = {'heads': ['编号', '环号', '沉降'], 'datas': data}
-            dataSum = 28
-            return render_template('project/data/dataImport.html', date=date, data=data, dataSum=dataSum)
+            return render_template('project/solution/solutionShow.html', datas=datas)
+        elif mode == '2':
+            return render_template('project/solution/solutionData.html', datas=datas)
+        elif mode == '3':
+            return render_template('project/solution/solutionCurve.html', datas=datas)
         else:
-            date = request.args.get('date')
-            data = getDataByDate(date)
-            data = {'heads': ['编号', '环号', '沉降'], 'datas': data}
-            dataSum = 18
-            return render_template('project/data/dataEdit.html', date=date, data=data, dataSum=dataSum)
+            return render_template('project/solution/solutionReport.html', datas=datas)

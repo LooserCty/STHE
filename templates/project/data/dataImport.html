@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% block title %}新建工程{% endblock %}
+{% block title %}
+{{ datas['name'] }}
+{% endblock %}
 
 {% block body %}
 
@@ -10,10 +12,10 @@
             数据模块
         </li>
         <li class="breadcrumb-item">
-            <a href="{{ url_for('project.analysis',mode=1) }}">分析模块</a>
+            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
         </li>
         <li class="breadcrumb-item">
-            <a href="#">结果模块</a>
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
         </li>
     </ol>
 </nav>
@@ -21,7 +23,7 @@
 <nav>
     <ol class="breadcrumb">
         <li class="breadcrumb-item active">导入数据</li>
-        <li class="breadcrumb-item"><a href="{{ url_for('project.data', mode=2) }}">编辑数据</a></li>
+        <li class="breadcrumb-item"><a href="{{ url_for('project.data', name=datas['name'], mode=2) }}">编辑数据</a></li>
     </ol>
 </nav>
 
@@ -59,14 +61,14 @@
 
 
 
-{% if date %}
+{% if datas['date'] %}
 <div class="container-fluid">
 
     <div class="form-group">
         <label for="date">
             数据采集时间
         </label>
-        <input type="date" class="form-control" name="date" id="date" required value={{ date }} />
+        <input type="date" class="form-control" name="date" id="date" required value={{ datas['date'] }} />
     </div>
 
     <span>病害数据表格</span>
@@ -74,25 +76,26 @@
     <table id="dataTable" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
-                {% for head in data['heads'] %}
-                <th>
-                    {{ head }}
-                </th>
-                {% endfor %}
+                <th>管片环号</th>
+                <th>裂缝长度</th>
+                <th>裂缝宽度</th>
+                <th>曲率半径</th>
+                <th>错台</th>
+                <th>沉降速度</th>
+                <th>横向收敛变形</th>
+                <th>渗漏水速度</th>
             </tr>
         </thead>
         <tbody>
-            {% for i in range(dataSum) %}
+            {% for segment in datas['data'].values %}
             <tr>
-                {% for head in data['heads'] %}
-                <th>
-                    {{ data['datas'][head][i] }}
-                </th>
+                {% for t in segment %}
+                    <td>
+                        {{ t }}
+                    </td>
                 {% endfor %}
             </tr>
-
             {% endfor %}
-
         </tbody>
 
     </table>

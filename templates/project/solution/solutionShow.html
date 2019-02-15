@@ -1,0 +1,152 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{{ datas['name'] }}
+{% endblock %}
+
+{% block body %}
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+        </li>
+        <li class="breadcrumb-item active">
+            结果模块
+        </li>
+    </ol>
+</nav>
+
+<nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active">
+            结果展示
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=2) }}">结果数据</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=3) }}">变化曲线</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
+        </li>
+    </ol>
+</nav>
+
+
+<div class="form-group">
+    <label for="#">采集时间</label>
+    <select class="custom-select collectDate" name="" id="">
+    </select>
+</div>
+
+<div class="form-group">
+    <label for="#">评价类型</label>
+    <select class="custom-select evaluationType" name="" id="">
+    </select>
+</div>
+
+<div class="form-group test">
+    <label for=""></label>
+    <select class="custom-select" name="" id="">
+        <option selected>综合评价Select one</option>
+        <option value="">1</option>
+        <option value="">2</option>
+        <option value="">3</option>
+    </select>
+</div>
+
+
+
+<div class="container show">
+
+
+    <!-- <span class="label label-warning">红橙黄绿</span> -->
+
+
+    <div class="container">
+        <img src="" class="img-1 img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+            alt="">
+        <span class="label label-info">管片健康状态评价云图</span>
+    </div>
+
+    <div class="container">
+        <img src="" class="img-2 img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+            alt="">
+        <span class="label label-info">管片健康状态曲线</span>
+
+    </div>
+</div>
+
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <div class="scroll" id="scroll">
+                <div class="bar" id="bar">
+                </div>
+                <div class="mask" id="mask"></div>
+            </div>
+        </div>
+
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <input type="number" name="ringNumber" id="ringNumber" class="ringNumber" value=0 required />
+        </div>
+
+    </div>
+
+
+
+</div>
+
+
+
+
+<script type="text/javascript">
+    {% include 'js/solutionShow.js' %}
+</script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ringNumber {
+        margin: 90px;
+    }
+
+    .scroll {
+        margin: 100px;
+        width: 500px;
+        height: 5px;
+        background: #ccc;
+        position: relative;
+    }
+
+    .bar {
+        width: 10px;
+        height: 20px;
+        background: #369;
+        position: absolute;
+        top: -7px;
+        left: 0;
+        cursor: pointer;
+    }
+
+    .mask {
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: #369;
+        width: 0;
+        height: 5px;
+    }
+</style>
+
+{% endblock %}
