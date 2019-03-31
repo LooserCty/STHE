@@ -21,7 +21,7 @@ def setProjectInfoDB(data):
             'INSERT OR IGNORE INTO project_t (name, describe, depth, radiusInside, radiusOuter, length, strength, user_id) \
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
             (data['name'], data['describe'], data['depth'], data['radiusInside'],
-             data['radiusOuter'], data['length'], data['strength'], user_id)
+             data['radiusOuter'], data['length'], 50, user_id)
         )
         db.commit()
     except:
@@ -31,6 +31,11 @@ def setProjectInfoDB(data):
 def setProjectDateDB(name, date):
     project_id = getProjectIdDB(name)
     db = get_db()
+
+    dates = db.execute(
+        'select * from time_t where date=? and project_id=?', (date, project_id)).fetchall()
+    if dates:
+        return 
     try:
         db.execute(
             'insert or ignore into time_t (date,project_id) values(?,?)', (date, project_id))

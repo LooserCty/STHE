@@ -1,0 +1,64 @@
+.header-2 {
+    position: relative;
+    height: 3em;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    max-width: inherit;
+}
+
+.container.header-2 {
+    background-color:linen;
+}
+
+.nav-2 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-2.r {
+    position: absolute;
+    left: 40%;
+    right: 40%;
+}
+
+li.header-2 {
+    display: inline-block;
+    margin-top: 0.8em;
+    top: 0.8em;
+}
+
+button.next {
+    position: relative;
+    content: '';
+    background-image: url('../img/next.png');
+    background-size: 0.8em;
+    background-color: linen;
+    width: 1em;
+    height: 1em;
+}
+
+label.nav-2 {
+    position: absolute;
+    margin: 0em;
+}
+
+
+ul.header-2-l {
+    padding: 0;
+}
+
+.container.nav-2 {
+    padding: 0;
+}
+
+.header-3,
+.header-4 {
+    background-color: linen;
+    padding: 0;
+}
+
+li.active > a:first-child {
+    color:brown;
+}

@@ -17,7 +17,6 @@ def getSolution(name, date):
     spath = path+'solution/'+date+'.csv'
     file = os.path.normpath(spath)
     data = pd.read_csv(file, engine='python', index_col=0)
-    # print(data.index, data.columns, file=sys.stdout)
     return data
 
 
@@ -38,27 +37,21 @@ def analysisRealize():
         if mode == '1':
             # date = request.form.get('date')
             # ringNumber = request.values.get('ringNumber')
-            return redirect(url_for('project.analysis', name=name, mode=1, date=date, ringNumber=ringNumber))
-        else:
-            return redirect(url_for('project.analysis', name=name, mode=2))
-    else:
-        if mode == '1':
-            # date = request.values.get('date')
-            # ringNumber = request.values.get('ringNumber')
-            # datas['date'] = date
-            # datas['ringNumber'] = ringNumber
+            # return redirect(url_for('project.analysis', name=name, mode=1, date=date, ringNumber=ringNumber))
+
             data = None
             if date:
                 data = getSolution(name, date)
-                # print(data.index,type(ringNumber), file=sys.stdout)
                 data = data.loc[int(ringNumber)]
-            # data=getData(name,date,ringNumber)
-            # data = pd.read_csv(
-            #     'C:/Users/CTY/Documents/Python/solution.csv', engine='python')
-            # data = data.iloc[0, 1:]
             if data is not None:
                 datas['data'] = data
                 datas['success'] = True
             return render_template('project/analysis/analysisCompute.html', datas=datas)
         else:
+            return redirect(url_for('project.analysis', name=name, mode=2))
+    else:
+        if mode == '1':
+            return render_template('project/analysis/analysisCompute.html', datas=datas)
+        else:
             return render_template('project/analysis/analysisBasis.html', datas=datas)
+

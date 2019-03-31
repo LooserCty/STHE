@@ -1,0 +1,103 @@
+<div class="container header-2">
+    <div class="row header-2">
+        <div class="col-md-8">
+            <div class="container nav-2">
+                <ul class="header-2-l">
+                    <li class='header-2'>
+                        <a href="{{url_for('project.index') }}" style="color:brown;">
+                            {{ datas['name'] }}
+                        </a>
+                    </li>
+                    <li class='header-2'>
+                        <button class="next"></button>
+                        <ol class="breadcrumb header-3">
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">数据模块</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
+                            </li>
+                        </ol>
+                        <strong class="s-header-3-4">—</strong>
+                        <ol class="breadcrumb header-4">
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=2) }}">导入数据</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=2) }}">编辑数据</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="container nav-2 r">
+                <a href="{{ url_for('project.index') }}">
+                    <label class="nav-2" for="">返回上一级</label>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <style>
+    .header-2 {
+        position: relative;
+        height: 3em;
+        margin: 0;
+        padding: 0;
+        border: 0;
+        max-width: inherit;
+    }
+
+    .container.header-2 {
+        background-color: linen;
+    }
+
+    .nav-2 {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    .nav-2.r {
+        position: absolute;
+        left: 40%;
+        right: 40%;
+    }
+
+    li.header-2 {
+        display: inline-block;
+        margin-top: 0.8em;
+        top: 0.8em;
+    }
+
+    button.next {
+        position: relative;
+        content: '';
+        background-image: url('../../static/header/img/next.png');
+        background-size: 0.8em;
+        width: 1em;
+        height: 1em;
+    }
+
+    label.nav-2 {
+        position: absolute;
+        margin: 0em;
+    }
+
+
+    ul.header-2-l {
+        padding: 0;
+    }
+
+    .container.nav-2 {
+        padding: 0;
+    }
+</style> -->

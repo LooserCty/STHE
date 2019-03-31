@@ -6,35 +6,111 @@
 
 {% block body %}
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
-        </li>
-        <li class="breadcrumb-item active">
-            结果模块
-        </li>
-    </ol>
-</nav>
+<div class="container header-2">
+    <div class="row header-2">
+        <div class="col-md-10">
+            <div class="container nav-2">
+                <ul class="header-2-l">
+                    <li class='header-2'>
+                        <a href="{{ url_for('project.index') }}" style="color:brown;">
+                            {{ datas['name'] }}
+                        </a>
+                    </li>
+                    <li class='header-2'>
+                        <button class="next"></button>
+                        <ol class="breadcrumb header-3">
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
+                            </li>
+                        </ol>
+                        <strong class="s-header-3-4">—</strong>
+                        <ol class="breadcrumb header-4">
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果展示</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=2) }}">结果数据</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=3) }}">变化曲线</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果展示</a>
-        </li>
-        <li class="breadcrumb-item active">
-            结果数据
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=3) }}">变化曲线</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
-        </li>
-    </ol>
-</nav>
+        <div class="col-md-2">
+            <div class="container nav-2 r">
+                <a href="{{ url_for('project.index') }}">
+                    <label class="nav-2" for="">返回上一级</label>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- <label class="table-title" style="position:absolute;text-align: center;">隧道健康评价结果表</label> -->
+
+<div class="container">
+
+    <table id="dataTable" class="display" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>采集时间</th>
+                <th>健康评分</th>
+                <th>健康等级</th>
+                <th>评价结果文件</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for row in datas['data'] %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+                <td>{{ row[3] }}</td>
+                <td>
+                    <a href="{{ row[4] }}" download="{{ row[1]+'.csv' }}">下载</a>
+                </td>
+                <td>
+                    <a href="{{ row[5] }}">查看</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+
+    </table>
+
+    <script>
+        $(document).ready(function () {
+            $('#dataTable').dataTable();
+        });
+    </script>
+</div>
+
+
+
+<script type="text/javascript">
+    {% include 'js/ENG2CN.js' %}
+</script>
+
+
+
+
 
 {% endblock %}

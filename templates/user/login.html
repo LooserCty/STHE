@@ -1,26 +1,98 @@
 {% extends 'base.html' %}
 
-{% block title %}登录{% endblock %}
-
-{% block body %}
-<h1>登录</h1>
+<!-- <h1>注册</h1>
 
 <form method="post">
     <label for="username">用户名</label>
     <input name="username" id="username" required>
     <label for="password">密码</label>
     <input type="password" name="password" id="password" required>
-    <input type="submit" value="登录">
+    <input type="submit" value="注册">
+</form> -->
 
-    <!-- <tr>
-        <th>Username</th>
-        <th><input name="username" id="username" required></th>
-        <th>Password</th>
-        <th><input type="password" name="password" id="password" required></th>
-        <th><input type="submit" value="登录"></th>
-    </tr> -->
+{% block title %}登录{% endblock %}
 
-</form>
+{% block head %}
+<link rel="stylesheet" type="text/css" href="../../static/login/css/normalize.css" />
+<link rel="stylesheet" type="text/css" href="../../static/login/css/demo.css" />
+<!--必要样式-->
+<link rel="stylesheet" type="text/css" href="../../static/login/css/component.css" />
+{% endblock %}
 
+{% block body %}
+
+
+
+<div class="container demo-1">
+    <div class="content">
+        <div id="large-header" class="large-header">
+            <canvas id="demo-canvas"></canvas>
+            <div class="logo_box">
+                <h3>欢迎登录</h3>
+                <form class="form" action="#" name="f" method="post">
+                    <div class="input_outer">
+                        <span class="u_user"></span>
+                        <input name="username" class="text" style="color: #FFFFFF !important" type="text"
+                            placeholder="请输入账户">
+                    </div>
+                    <div class="input_outer">
+                        <span class="us_uer"></span>
+                        <input name="password" class="text"
+                            style="color: #FFFFFF !important; position:absolute; z-index:100;" value="" type="password"
+                            placeholder="请输入密码">
+                    </div>
+                    <div class="mb2"><a class="act-but submit" href="javascript:submitFun();"
+                            style="color: #FFFFFF">登录</a></div>
+                    {% for message in get_flashed_messages() %}
+                    <div class="flash">{{ message }}</div>
+                    {% endfor %}
+                </form>
+            </div>
+        </div>
+    </div>
+</div><!-- /container -->
+<div style="text-align:center;"></div>
+
+
+<script src="../../static/login/js/TweenLite.min.js"></script>
+<script src="../../static/login/js/EasePack.min.js"></script>
+<script src="../../static/login/js/rAF.js"></script>
+<script src="../../static/login/js/demo-1.js"></script>
+
+
+<script>
+    function submitFun() {
+        $('.form').submit();
+    }
+</script>
+
+<style>
+    .container.demo-1 {
+        padding: 0;
+        max-width: fit-content;
+    }
+</style>
+
+<style>
+    .flash {
+        color: red;
+        position: relative;
+        text-align: center;
+    }
+</style>
+
+<style>
+    .nav.btn2 {
+        background-color: rgba(200, 200, 200, 0.7);
+    }
+</style>
+
+<script>
+    $(document).keyup(function (event) {
+        if (event.keyCode == 13) {
+            $('.form').submit();
+        }
+    });
+</script>
 
 {% endblock %}

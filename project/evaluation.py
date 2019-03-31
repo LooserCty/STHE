@@ -1,13 +1,16 @@
+import sys
 import pandas as pd
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 ####
 # 隶属函数系数由分值标准确定
 ####
 
 # 隶属函数
-def subjectFun(k, alpha):
+
+
+def subjectFun(k, alpha, is_reverse):
     def f(x):
         beta = [2, 2, 2, -2]
         a = [k[0]*0.8, (k[0]+k[1])/2, (k[1]+k[2])/2, (k[1]+k[2]*3)/4]
@@ -42,6 +45,13 @@ def subjectFun(k, alpha):
         elif x >= k[0]:
             level = 2
 
+        if is_reverse:
+            level = 5-level
+            subjection = subjection[::-1]
+
+        subjection = np.array(subjection)
+        subjection = subjection/subjection.sum()
+
         return level, subjection
     return f
 
@@ -50,24 +60,34 @@ def subjectFun(k, alpha):
 
 def getSubjectFunDict():
     kdict = {
-        'crackLength': [2, 5, 10],
+        'crackLength': [3, 5, 10],
         'crackWidth': [1, 3, 5],
         'radiusOfCurvature': [1, 4.7, 15],
         'segmentDislocation': [4, 8, 13],
-        'settlementRate': [1, 3, 10],
-        'convergenceDeformation': [7, 10, 16]
+        'settlementRate': [5, 10, 15],
+        'convergenceDeformation': [7.7, 9.6, 13.9]
     }
     alphadict = {
-        'crackLength': [6.25, 0.44444444, 0.16, 1.5625],
+        'crackLength': [2.77777778, 1, 0.16, 1.5625],
         'crackWidth': [25., 1., 1., 0.25],
         'radiusOfCurvature': [25., 0.29218408, 0.03770384, 6.630625],
         'segmentDislocation': [1.5625, 0.25, 0.16, 1.5625],
-        'settlementRate': [25., 1., 0.08163265, 3.0625],
-        'convergenceDeformation': [0.51020408, 0.44444444, 0.11111111, 2.25]
+        'settlementRate': [1., 0.16, 0.16, 1.5625],
+        'convergenceDeformation': [0.42165627, 1.10803324, 0.21633315, 1.155625]
     }
+    reversedict = {
+        'crackLength': 0,
+        'crackWidth': 0,
+        'radiusOfCurvature': 1,
+        'segmentDislocation': 0,
+        'settlementRate': 0,
+        'convergenceDeformation': 0
+    }
+
     fdict = {}
     for index in kdict:
-        fdict[index] = subjectFun(kdict[index], alphadict[index])
+        fdict[index] = subjectFun(
+            kdict[index], alphadict[index], reversedict[index])
     # leakageRate
 
     def leakageRateFun(x):
@@ -105,6 +125,7 @@ def getSubjectionSumm(w):
         res = pd.Series([0]*len(s.iloc[0]))
         for ix in s.index:
             res += pd.Series(s[ix])*wdict[ix]
+        # print(res.sum())
         return res
     return f
 
@@ -112,28 +133,39 @@ def getSubjectionSumm(w):
 
 
 def getSubjectionNorm(df):
-    w = np.array([0.125, 0.375, 0.625, 0.875])*100
+    w = np.array([0.125, 0.375, 0.625, 0.875][::-1])*100
     norm = df.apply(lambda x: np.sum(np.array(x)*w), axis=1)
 
     def f(x):
-        l = 1
-        if x >= 75:
-            l = 4
-        elif x >= 50:
-            l = 3
-        elif x >= 25:
+        l = 4
+        if x > 75:
+            l = 1
+        elif x > 50:
             l = 2
+        elif x > 25:
+            l = 3
         return l
     level = norm.apply(f)
     res = pd.concat([norm, level], axis=1)
     res.columns = ['comprehensiveValue', 'comprehensiveLevel']
     return res
 
+#隶属向量转化为评分
+def getSubjectionToScore(s):
+    def toScore(subjection):
+        w = np.array([0.125, 0.375, 0.625, 0.875][::-1])*100
+        subjection=np.array(subjection)
+        return (w*subjection).sum()
+    
+    return s.apply(toScore)
+
+
 # 获取总的计算结果
 
 
 def getSolution(data):
-    w = [1/7]*7
+    w = [0.14502761, 0.19376159, 0.07834023,
+         0.08007087, 0.06553351, 0.0741867, 0.36307949]
     fdict = getSubjectFunDict()
     d = data.iloc[:, 1:]
     level = pd.DataFrame()
@@ -142,6 +174,12 @@ def getSolution(data):
         evaluation = d[col].map(fdict[col])
         level[col] = evaluation.map(lambda x: x[0])
         subjection[col] = evaluation.map(lambda x: x[1])
+
+    # for x in subjection:
+    #     for y in subjection[x]:
+    #         print(y)
+    score = subjection.apply(getSubjectionToScore, axis=0)
+    print(score)
     subjectionSumm = subjection.apply(getSubjectionSumm(w), axis=1)
     subjectionSumm.columns = ['subjection1',
                               'subjection2', 'subjection3', 'subjection4']
@@ -149,3 +187,41 @@ def getSolution(data):
     s = pd.concat([level, subjectionSumm, subjectionNorm], axis=1)
     s.index = data.iloc[:, 0]
     return s
+
+# 生成并保存某指标评价结果图像
+
+
+def saveOneImage(data, path):
+    color = {1: 'green', 2: 'yellow', 3: 'orange', 4: 'red'}
+
+    fig = plt.figure(figsize=(20, 2))
+
+    data = data.apply(int)
+    n = data.shape[0]
+    x = np.linspace(0, n, n+1)
+    for i in range(n):
+        plt.axvspan(x[i], x[i+1], edgecolor='b',
+                    facecolor=color[data.iloc[i]], alpha=1, lw=1)
+
+    ax = plt.gca()
+    ax.spines['top'].set_color('none')
+    ax.spines['right'].set_color('none')
+    ax.spines['left'].set_color('none')
+    ax.spines['bottom'].set_color('none')
+    plt.yticks([])
+    plt.tick_params(labelsize=20)
+    plt.tight_layout()
+
+    fpath = path+data.name+'.png'
+    fig.savefig(fpath, dpi=360)
+
+    plt.close(fig)
+
+# 生成并保存评价结果图像与曲线
+
+
+def saveSolutionImage(data, path):
+    index = ['crackLength', 'crackWidth', 'radiusOfCurvature',	'segmentDislocation',
+             'settlementRate',	'convergenceDeformation', 'leakageRate', 'comprehensiveLevel']
+    for i in index:
+        saveOneImage(data[i], path)

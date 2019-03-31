@@ -1,0 +1,134 @@
+.col-md-6.header {
+    position: relative;
+    height: 4em;
+}
+
+.nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1.nav {
+    /* top: 0.5em; */
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 2em;
+}
+
+.nav.btn1 {
+    right: 0;
+    height: 4em;
+    width: 8em;
+    background-color: white;
+}
+
+.nav.btn1::before {
+    position: relative;
+    left: 5px;
+    right: 5px;
+    content: '';
+    background-image: url('../img/register.png');
+    background-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.nav.btn2 {
+    right: 8em;
+    height: 4em;
+    width: 8em;
+    background-color: white;
+}
+
+.nav.btn2::before {
+    position: relative;
+    left: 5px;
+    right: 5px;
+    content: '';
+    background-image: url('../img/login.png');
+    background-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.nav.btn1.user_true {
+    right: 0;
+    height: 4em;
+    width: 8em;
+    background-color: white;
+}
+
+.nav.btn1.user_true::before {
+    position: relative;
+    left: 5px;
+    right: 5px;
+    content: '';
+    background-image: url('../img/logout.png');
+    background-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.nav.btn2.user_true {
+    right: 8em;
+    height: 4em;
+    width: 8em;
+    background-color: white;
+}
+
+.nav.btn2.user_true::before {
+    position: relative;
+    left: 5px;
+    right: 5px;
+    content: '';
+    background-image: url('../img/user.png');
+    background-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+.nav.btn3.user_true {
+    right: 16em;
+    height: 4em;
+    width: 8em;
+    background-color: white;
+}
+
+.nav.btn3.user_true::before {
+    position: relative;
+    left: 5px;
+    right: 5px;
+    content: '';
+    background-image: url('../img/project.png');
+    background-size: 1.5em;
+    width: 1.5em;
+    height: 1.5em;
+}
+
+label.nav {
+    position: absolute;
+    left: 2.5em;
+}
+
+/* .nav.btn3{
+    right: 16em;
+    height: 4em;
+    width: 8em;
+} */
+
+
+
+
+.header-3, .header-4{
+    margin: 0;
+    /* border: 0;
+    padding: 0; */
+    display: inline-flex;
+    background-color: #e9ecef;
+}
+.s-header-3-4{
+    margin-top: 0.6em;
+}

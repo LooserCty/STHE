@@ -1,16 +1,17 @@
-import sys
 import os
-from flask import (Blueprint, flash, g, json, jsonify, redirect,
-                   render_template, request, session, url_for, current_app)
+import sys
+
+import pandas as pd
+from flask import (Blueprint, current_app, flash, g, json, jsonify, redirect,
+                   render_template, request, session, url_for)
 from werkzeug.exceptions import abort
 
 from ..db import getProjectData, setProjectData
 from ..db.db import get_db
 from ..usr.user import login_required
 from .analysis import analysisRealize
-from .data import dataRealize
-from .solution import solutionRealize
-import pandas as pd
+from .data import dataRealize, dataDateDataRealize
+from .solution import solutionDateDataRealize, solutionRealize
 
 bp = Blueprint('project', __name__, url_prefix='/project')
 
@@ -47,7 +48,6 @@ def create():
         data = request.values
         print(request.values, file=sys.stdout)
         createProjectDirs(data['name'])
-
         setProjectData.setProjectInfoDB(data)
         return redirect(url_for('project.index'))
 
@@ -70,3 +70,15 @@ def analysis():
 @login_required
 def solution():
     return solutionRealize()
+
+
+@bp.route('/dataDateData', methods=('GET', 'POST'))
+@login_required
+def dataDateData():
+    return dataDateDataRealize()
+
+
+@bp.route('/solutionDateData', methods=('GET', 'POST'))
+@login_required
+def solutionDateData():
+    return solutionDateDataRealize()

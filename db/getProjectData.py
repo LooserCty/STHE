@@ -26,8 +26,8 @@ def getProjectIdDB(name):
         'select id from project_t where name=? and user_id=?', (name, user_id)
     ).fetchone()
 
-    print('db project_id:', id, file=sys.stdout)
-    return id
+    print('db project_id:', id['id'], file=sys.stdout)
+    return id['id']
 
 
 # def getProjectInfoDB(name):

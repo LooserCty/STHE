@@ -6,84 +6,137 @@
 
 {% block body %}
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
-        </li>
-        <li class="breadcrumb-item active">
-            结果模块
-        </li>
-    </ol>
-</nav>
+<div class="container header-2">
+    <div class="row header-2">
+        <div class="col-md-10">
+            <div class="container nav-2">
+                <ul class="header-2-l">
+                    <li class='header-2'>
+                        <a href="{{ url_for('project.index') }}" style="color:brown;">
+                            {{ datas['name'] }}
+                        </a>
+                    </li>
+                    <li class='header-2'>
+                        <button class="next"></button>
+                        <ol class="breadcrumb header-3">
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
+                            </li>
+                        </ol>
+                        <strong class="s-header-3-4">—</strong>
+                        <ol class="breadcrumb header-4">
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果展示</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=2) }}">结果数据</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=3) }}">变化曲线</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-            结果展示
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=2) }}">结果数据</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=3) }}">变化曲线</a>
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=4) }}">分析报告</a>
-        </li>
-    </ol>
-</nav>
-
-
-<div class="form-group">
-    <label for="#">采集时间</label>
-    <select class="custom-select collectDate" name="" id="">
-    </select>
+        <div class="col-md-2">
+            <div class="container nav-2 r">
+                <a href="{{ url_for('project.index') }}">
+                    <label class="nav-2" for="">返回上一级</label>
+                </a>
+            </div>
+        </div>
+    </div>
 </div>
 
-<div class="form-group">
-    <label for="#">评价类型</label>
-    <select class="custom-select evaluationType" name="" id="">
-    </select>
+<div class="container-fluid">
+    <div class="form-group">
+        <ul>
+            <li class="import">
+                <label for="date">
+                    数据采集时间
+                </label>
+            </li>
+            <li class="import">
+                <select style="width:12em;" class="custom-select collectDate" name="" id=""></select>
+
+            </li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <ul>
+            <li class="import">
+                <label for="#">评价类型</label>
+            </li>
+            <li class="import">
+                <select style="width:12em;margin-left:2em;" class="custom-select evaluationType" name="" id=""></select>
+            </li>
+        </ul>
+    </div>
+
+    <!-- <button type="submit" class="btn btn-primary" style="margin-left:8em;">
+        提交
+    </button> -->
+
 </div>
 
-<div class="form-group test">
-    <label for=""></label>
-    <select class="custom-select" name="" id="">
-        <option selected>综合评价Select one</option>
-        <option value="">1</option>
-        <option value="">2</option>
-        <option value="">3</option>
-    </select>
-</div>
 
+<style>
+    .form-group {
+        height: 2em;
+        margin-top: 0.5em;
+        margin-left: 35%;
+        /* margin-bottom: 0.5em; */
+    }
+
+    li.import {
+        display: inline-flex;
+        margin-right: 2em;
+    }
+</style>
 
 
 <div class="container show">
-
-
-    <!-- <span class="label label-warning">红橙黄绿</span> -->
-
-
+    <h4 style="margin-left: 32%;">
+        盾构隧道衬砌环健康状态评价云图
+    </h4>
     <div class="container">
         <img src="" class="img-1 img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
             alt="">
-        <span class="label label-info">管片健康状态评价云图</span>
     </div>
-
-    <div class="container">
-        <img src="" class="img-2 img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-            alt="">
-        <span class="label label-info">管片健康状态曲线</span>
-
-    </div>
+    <ul style="margin-left:25%;">
+        <li style="display:inline-flex; margin-right: 2em;">
+            <div style="height: 1.5em;width: 1.5em; background-color: red;"></div>
+            <label style="margin-left: 0.5em;">Ⅳ级 极严重</label>
+        </li>
+        <li style="display:inline-flex;margin-right: 2em;">
+            <div style="height: 1.5em;width: 1.5em; background-color: orange;"></div>
+            <label style="margin-left: 0.5em;">Ⅲ级 严重</label>
+        </li>
+        <li style="display:inline-flex;margin-right: 2em;">
+            <div style="height: 1.5em;width: 1.5em; background-color: yellow;"></div>
+            <label style="margin-left: 0.5em;">Ⅱ级 一般</label>
+        </li>
+        <li style="display:inline-flex;margin-right: 2em;">
+            <div style="height: 1.5em;width: 1.5em; background-color: green;"></div>
+            <label style="margin-left: 0.5em;">Ⅰ级 轻微</label>
+        </li>
+    </ul>
 </div>
 
-<div class="container">
 
+
+<!-- <div class="container">
     <div class="row">
 
         <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
@@ -99,10 +152,7 @@
         </div>
 
     </div>
-
-
-
-</div>
+</div> -->
 
 
 

@@ -6,30 +6,54 @@
 
 {% block body %}
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
-        </li>
-        <li class="breadcrumb-item active">
-            分析模块
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
-        </li>
-    </ol>
-</nav>
 
-<nav>
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active">
-            计算分析
-        </li>
-        <li class="breadcrumb-item">
-            <a href="{{ url_for('project.analysis', name=datas['name'], mode=2) }}">分析依据</a>
-        </li>
-    </ol>
-</nav>
+<div class="container header-2">
+    <div class="row header-2">
+        <div class="col-md-10">
+            <div class="container nav-2">
+                <ul class="header-2-l">
+                    <li class='header-2'>
+                        <a href="{{ url_for('project.index') }}" style="color:brown;">
+                            {{ datas['name'] }}
+                        </a>
+                    </li>
+                    <li class='header-2'>
+                        <button class="next"></button>
+                        <ol class="breadcrumb header-3">
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
+                            </li>
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.solution', name=datas['name'], mode=1) }}">结果模块</a>
+                            </li>
+                        </ol>
+                        <strong class="s-header-3-4">—</strong>
+                        <ol class="breadcrumb header-4">
+                            <li class="breadcrumb-item active">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">计算分析</a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=2) }}">分析依据</a>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="container nav-2 r">
+                <a href="{{ url_for('project.index') }}">
+                    <label class="nav-2" for="">返回上一级</label>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="container-fluid">
     <div class="row">
@@ -50,28 +74,53 @@
     </div>
 </div>
 
-<div class="container-fluid">
+
+<div class="container-fluid" style="margin-left:30%;">
     <form role="form" method="POST">
         <div class="form-group">
-            <label for="date">
-                数据采集时间
-            </label>
-            <input type="date" class="form-control" name="date" id="date" {% if datas['date'] %} value={{ datas['date'] }}
-                {% endif %} required />
+            <ul>
+                <li class="import">
+                    <label for="date">
+                        数据采集时间
+                    </label>
+                </li>
+                <li class="import">
+                    <input style="width:12em;" type="date" class="form-control" name="date" id="date" required />
+                </li>
+            </ul>
         </div>
         <div class="form-group">
-            <label for="ringNum">
-                衬砌环号
-            </label>
-            <input type="number" class="form-control" name="ringNumber" id="ringNumber" {% if datas['ringNumber'] %}
-                value={{ datas['ringNumber'] }} {% endif %} required />
+            <ul>
+                <li class="import">
+                    <label for="ringNum">衬砌环号</label>
+                </li>
+                <li class="import">
+                    <input style="margin-left:2em;width:12em;" type="number" class="form-control" name="ringNumber" id="ringNumber"
+                        required />
+                </li>
+            </ul>
         </div>
-
-        <button type="submit" class="btn btn-primary">
+        <button style="margin-left: 8em;"
+        type="submit" class="btn btn-primary">
             计算
         </button>
     </form>
 </div>
+
+<style>
+    .form-group {
+        height: 2em;
+        margin-top: 0.5em;
+        /* margin-bottom: 0.5em; */
+    }
+
+    li.import {
+        display: inline-flex;
+        margin-right: 2em;
+    }
+</style>
+
+
 
 {% if datas['success'] %}
 <div class="container-fluid">
@@ -110,7 +159,7 @@
             <tr class="table-warning">
                 <th>健康级别</th>
                 <th>一级（轻微）</th>
-                <th>二级（较严重）</th>
+                <th>二级（一般）</th>
                 <th>三级（严重）</th>
                 <th>四级（极严重）</th>
             </tr>

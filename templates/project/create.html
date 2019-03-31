@@ -4,67 +4,140 @@
 
 {% block body %}
 
-
 <div class="container-fluid">
-    <header>
-        <h4>工程信息</h4>
-    </header>
+    <div class="row" style="height: 3em;background-color: linen;">
+        {% if g.user %}
+        <div class="col-10" style="display: inline-flex;margin-top: 0.7em;">
+            <h5 style="margin-left: 50%;">
+                工程基本信息录入
+            </h5>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+<div class="container-fluid" style="margin-left:35%;">
     <form role="form" method="post">
         <div class="form-group">
-            <label for="projectName">
-                工程名称
-            </label>
-            <input class="form-control" name="name" id="name"
-                required/>
+            <ul>
+                <li class="import">
+                    <label for="projectName">
+                        工程名称
+                    </label>
+                </li>
+                <li class="import" style="margin-left:2em;">
+                    <input class="form-control" name="name" id="name" required />
+                </li>
+            </ul>
         </div>
         <div class="form-group">
-            <label for="Desc">
-                工程描述
-            </label>
-            <input class="form-control" name="describe" id="describe"
-                required/>
+            <ul>
+                <li class="import">
+                    <label for="Desc">
+                        工程描述
+                    </label>
+                </li>
+                <li class="import" style="margin-left:2em;">
+
+                    <input class="form-control" name="describe" id="describe" required />
+                </li>
+            </ul>
+
         </div>
         <div class="form-group">
-            <label for="depth">
-                埋深
-            </label>
-            <input type="number" class="form-control" name="depth" id="depth" step="0.01"
-                required/>
+            <ul>
+                <li class="import">
+                    <label for="depth">
+                        埋深（m）
+                    </label>
+                </li>
+                <li class="import" style="margin-left:1em;">
+                    <input type="number" class="form-control" name="depth" id="depth" step="0.01" required />
+                </li>
+            </ul>
+
+
         </div>
         <div class="form-group">
-            <label for="Desc">
-                外径
-            </label>
-            <input type="number" class="form-control" name="radiusInside" id="radiusInside" step="0.01"
-                id="projectDesc" required/>
+            <ul>
+                <li class="import">
+                    <label for="Desc">
+                        外径（m）
+                    </label>
+                </li>
+                <li class="import" style="margin-left:1em;">
+                    <input type="number" class="form-control" name="radiusInside" id="radiusInside" step="0.01"
+                        id="projectDesc" required />
+                </li>
+            </ul>
+
+
         </div>
         <div class="form-group">
-            <label for="Desc">
-                内径
-            </label>
-            <input type="number" class="form-control" name="radiusOuter" id="radiusOuter" step="0.01"
-                id="projectDesc" required/>
+            <ul>
+                <li class="import">
+                    <label for="Desc">
+                        内径（m）
+                    </label>
+                </li>
+                <li class="import" style="margin-left:1em;">
+                    <input type="number" class="form-control" name="radiusOuter" id="radiusOuter" step="0.01"
+                        id="projectDesc" required />
+                </li>
+            </ul>
+
+
         </div>
         <div class="form-group">
-            <label for="Desc">
-                管片长度
-            </label>
-            <input type="number" class="form-control" name="length" id="length" step="0.01"
-                id="projectDesc" required/>
-        </div>
-        <div class="form-group">
-            <label for="Desc">
-                混凝土设计强度
-            </label>
-            <input type="number" class="form-control" name="strength" id="strength" step="0.01"
-                id="projectDesc" required/>
+            <ul>
+                <li class="import">
+                    <label for="Desc">
+                        管片长度（m）
+                    </label>
+                </li>
+                <li class="import" style="margin-left:-1em;">
+                    <input type="number" class="form-control" name="length" id="length" step="0.01" id="projectDesc"
+                        required />
+                </li>
+            </ul>
+
+
         </div>
 
-        <button type="submit" class="btn btn-primary">
+        <!-- <div class="form-group">
+            <ul>
+                <li class="import">
+                    <label for="Desc">
+                        混凝土设计强度
+                    </label>
+                </li>
+                <li class="import">
+                    <input type="number" class="form-control" name="strength" id="strength" step="0.01" id="projectDesc"
+                        required />
+                </li>
+            </ul>
+        </div> -->
+
+        <button type="submit" class="btn btn-primary" style="margin-left:9em;">
             提交
         </button>
     </form>
 </div>
+
+
+<style>
+    .form-group {
+        height: 2em;
+        margin-top: 0.5em;
+        /* margin-bottom: 0.5em; */
+    }
+
+    li.import {
+        display: inline-flex;
+        margin-right: 2em;
+    }
+</style>
 
 
 {% endblock %}

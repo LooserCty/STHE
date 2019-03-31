@@ -8,42 +8,34 @@
 
 {% block body %}
 <div class="container-fluid">
-    </br>
-    <div class="row">
-        <div class="col-md-6">
-            {% if g.user %}
-            <div class="row">
-                <div class="col-6">
-                    <h4>
-                        我的工程
-                    </h4>
-                </div>
-                <div class="col-6">
-                    <h4>
-                        <a class="action" href="{{ url_for('project.create') }}">新建工程</a>
-                    </h4>
-                </div>
-            </div>
-
-
-            {% endif %}
+    <div class="row" style="height: 3em;background-color: linen;">
+        {% if g.user %}
+        <div class="col-10" style="display: inline-flex;margin-top: 0.7em;">
+            <h5 style="margin-left: 50%;">
+                工程列表
+            </h5>
         </div>
+        <div class="col-2" style="display:inline-flex;">
+            <h5 style="margin-top:0.7em; margin-left: 20%;">
+                <a class="action" href="{{ url_for('project.create') }}">新建工程</a>
+            </h5>
+        </div>
+        {% endif %}
     </div>
-    </br>
 </div>
 
 
 
-<table id="projectTable" class="display" cellspacing="0" width="100%">
+<table id="dataTable" class="display" cellspacing="0" width="100%">
     <thead>
         <tr>
             <th>工程名称</th>
             <th>工程描述</th>
-            <th>埋深</th>
-            <th>内径</th>
-            <th>外径</th>
-            <th>管片长度</th>
-            <th>砼设计强度</th>
+            <th>埋深(m)</th>
+            <th>内径(m)</th>
+            <th>外径(m)</th>
+            <th>管片长度(m)</th>
+            <!-- <th>砼设计强度</th> -->
         </tr>
     </thead>
     <tbody>
@@ -51,7 +43,7 @@
 
         <tr onclick="myfunction(this)">
             <!-- <a href="{{ url_for('project.data', name=project['name'], mode=1) }}" target="_blank"> -->
-            {% for data in project %}
+            {% for data in project[:-1] %}
             <td>
                 {{ data }}
             </td>
@@ -67,7 +59,7 @@
 
 <script>
     $(document).ready(function () {
-        $('#projectTable').dataTable();
+        $('#dataTable').dataTable();
     });
 
     function myfunction(obj) {
@@ -82,7 +74,15 @@
     }
 </script>
 
+<script type="text/javascript">
+    {% include 'js/ENG2CN.js' %}
+</script>
 
 
+<style>
+    .nav.btn3.user_true {
+        background-color: rgba(200, 200, 200, 0.7);
+    }
+</style>
 
 {% endblock %}
