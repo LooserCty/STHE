@@ -77,33 +77,40 @@
 
 <div class="container-fluid" style="margin-left:30%;">
     <form role="form" method="POST">
-        <div class="form-group">
-            <ul>
-                <li class="import">
-                    <label for="date">
-                        数据采集时间
-                    </label>
-                </li>
-                <li class="import">
-                    <input style="width:12em;" type="date" class="form-control" name="date" id="date" required />
-                </li>
-            </ul>
+        <div class="row">
+            <div class="col-md-1-6">
+                <div class="form-group">
+                    <ul>
+                        <li class="import">
+                            <label for="date">
+                                数据采集时间
+                            </label>
+                        </li>
+                        <li class="import">
+                            <input style="width:12em;" type="date" class="form-control" name="date" id="date"
+                                required />
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <ul>
+                        <li class="import">
+                            <label for="ringNum">衬砌环号</label>
+                        </li>
+                        <li class="import">
+                            <input style="margin-left:2em;width:12em;" type="number" class="form-control"
+                                name="ringNumber" id="ringNumber" required />
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1-6">
+                <button style="margin-top:2em;" type="submit" class="btn btn-primary">
+                    计算
+                </button>
+            </div>
         </div>
-        <div class="form-group">
-            <ul>
-                <li class="import">
-                    <label for="ringNum">衬砌环号</label>
-                </li>
-                <li class="import">
-                    <input style="margin-left:2em;width:12em;" type="number" class="form-control" name="ringNumber" id="ringNumber"
-                        required />
-                </li>
-            </ul>
-        </div>
-        <button style="margin-left: 8em;"
-        type="submit" class="btn btn-primary">
-            计算
-        </button>
+
     </form>
 </div>
 
@@ -123,8 +130,12 @@
 
 
 {% if datas['success'] %}
+<br>
+<h4 style="margin-left: 35%;">
+    {{ datas['date'] }} {{ datas['ringNumber'] }}号衬砌环分析结果
+</h4>
 <div class="container-fluid">
-    </br>
+    <!-- </br> -->
     <h4>单因素评价结果</h4>
     <table class="table">
         <thead>
@@ -141,9 +152,9 @@
         </thead>
         <tbody>
             <tr class="table-active">
-                <td scope="row">健康级别</td>
+                <th scope="row">健康级别</th>
                 {% for i in range(7) %}
-                <th>{{ datas['data'].iloc[i] }}</th>
+                <td>{{ datas['data'][i] }}</td>
                 {% endfor %}
             </tr>
 
@@ -152,7 +163,7 @@
 </div>
 
 <div class="container-fluid">
-    </br>
+    <!-- </br> -->
     <h4>综合评价结果</h4>
     <table class="table">
         <thead>
@@ -166,9 +177,9 @@
         </thead>
         <tbody>
             <tr class="table-active">
-                <td scope="row">隶属度</td>
+                <th scope="row">隶属度</th>
                 {% for i in range(7,11) %}
-                <td>{{ datas['data'].iloc[i] }}</td>
+                <td>{{ datas['data'][i] }}</td>
                 {% endfor %}
             </tr>
 
@@ -181,20 +192,20 @@
         <tbody>
             <tr class="table-warning">
                 <td scope="row"></td>
-                <td>
+                <th>
                     <label for="none">综合评价值</label>
-                </td>
+                </th>
                 <td>
-                    <label for="value">{{ datas['data'].iloc[11] }}</label>
+                    <label for="value">{{ datas['data'][11] }}</label>
                 </td>
             </tr>
             <tr class="table-active">
                 <td scope="row"></td>
-                <td>
+                <th>
                     <label for="none">综合评价等级</label>
-                </td>
+                </th>
                 <td>
-                    <label for="value">{{ datas['data'].iloc[12] }}</label>
+                    <label for="value">{{ datas['data'][12] }}</label>
                 </td>
             </tr>
         </tbody>
@@ -203,8 +214,6 @@
 </div>
 
 {% endif %}
-
-
 
 
 {% endblock %}

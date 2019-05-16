@@ -10,7 +10,7 @@ from ..db import getProjectData, setProjectData
 from ..db.db import get_db
 from ..usr.user import login_required
 from .analysis import analysisRealize
-from .data import dataRealize, dataDateDataRealize
+from .data import dataDateDataRealize, dataRealize
 from .solution import solutionDateDataRealize, solutionRealize
 
 bp = Blueprint('project', __name__, url_prefix='/project')

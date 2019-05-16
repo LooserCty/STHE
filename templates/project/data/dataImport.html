@@ -21,7 +21,7 @@
                         <button class="next"></button>
                         <ol class="breadcrumb header-3">
                             <li class="breadcrumb-item active">
-                                <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">数据模块</a>
+                                <a href="{{ url_for('project.data', name=datas['name'], mode=1) }}">数据模块</a>
                             </li>
                             <li class="breadcrumb-item">
                                 <a href="{{ url_for('project.analysis', name=datas['name'], mode=1) }}">分析模块</a>
@@ -59,40 +59,47 @@
 
 <div class="container-fluid" style="margin-left: 30%;">
     <form role="form" method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-md-1-6">
+                <div class="form-group">
+                    <ul>
+                        <li class="import">
+                            <label for="date">
+                                数据采集时间
+                            </label>
+                        </li>
+                        <li class="import">
+                            <input type="date" class="form-control" name="date" id="date" required />
+                        </li>
+                    </ul>
+                </div>
 
-        <div class="form-group">
-            <ul>
-                <li class="import">
-                    <label for="date">
-                        数据采集时间
-                    </label>
-                </li>
-                <li class="import">
-                    <input type="date" class="form-control" name="date" id="date" required />
-                </li>
-            </ul>
+                <div class="form-group">
+                    <ul>
+                        <li class="import">
+                            <label for="exampleInputFile">病害数据文件</label>
+                        </li>
+                        <li class="import">
+                            <input type="file" class="form-control-file" name="dataFile" id="dataFile" required />
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group">
+                    <ul>
+                        <li class="import" style="margin-left:8em;">
+                            <a href="/static/data/dataTemplate.csv" download="dataTemplate.csv">数据模板（病害数据.csv）</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-1-6">
+                <button type="submit" class="btn btn-primary" style="margin-left:-3em;margin-top: 3em;">
+                    提交
+                </button>
+            </div>
         </div>
 
-        <div class="form-group">
-            <ul>
-                <li class="import">
-                    <label for="exampleInputFile">病害数据文件</label>
-                </li>
-                <li class="import">
-                    <input type="file" class="form-control-file" name="dataFile" id="dataFile" required />
-                </li>
-            </ul>
-        </div>
-        <div class="form-group">
-            <ul>
-                <li class="import" style="margin-left:8em;">
-                    <a href="/static/data/dataTemplate.csv" download="dataTemplate.csv">数据模板（病害数据.csv）</a>
-                </li>
-            </ul>
-        </div>
-        <button type="submit" class="btn btn-primary" style="margin-left:8em;margin-top: -0.5em;">
-            提交
-        </button>
+
     </form>
 </div>
 
@@ -117,13 +124,13 @@
     <table id="dataTable" class="display" cellspacing="0" width="100%">
         <thead>
             <tr>
-                <th>管片环号</th>
-                <th>裂缝长度</th>
-                <th>裂缝宽度</th>
-                <th>曲率半径</th>
-                <th>错台</th>
-                <th>沉降速度</th>
-                <th>横向收敛变形</th>
+                <th>环号</th>
+                <th>裂缝长度(m)</th>
+                <th>裂缝宽度(mm)</th>
+                <th>曲率半径(km）</th>
+                <th>错台(mm)</th>
+                <th>沉降速率(mm/y)</th>
+                <th>横向收敛变形(D‰)</th>
                 <th>渗漏水速度</th>
             </tr>
         </thead>

@@ -113,18 +113,23 @@ def getSubjectFunDict():
 
 def getSubjectionSumm(w):
     def f(s):
-        wdict = {
-            'crackLength': w[0],
-            'crackWidth': w[1],
-            'radiusOfCurvature': w[2],
-            'segmentDislocation': w[3],
-            'settlementRate': w[4],
-            'convergenceDeformation': w[5],
-            'leakageRate': w[6]
-        }
-        res = pd.Series([0]*len(s.iloc[0]))
-        for ix in s.index:
-            res += pd.Series(s[ix])*wdict[ix]
+        # wdict = {
+        #     'crackLength': w[0],
+        #     'crackWidth': w[1],
+        #     'radiusOfCurvature': w[2],
+        #     'segmentDislocation': w[3],
+        #     'settlementRate': w[4],
+        #     'convergenceDeformation': w[5],
+        #     'leakageRate': w[6]
+        # }
+        v = s.iloc[7:]
+        d = 3.5**(4-4*v/100)
+        vw = w*d/(w*d).sum()
+        res = pd.Series([0.0]*len(s.iloc[0]))
+        for ix in range(7):
+            # res += pd.Series(s[ix])*wdict[ix]
+            res += pd.Series(s.iloc[ix])*vw.iloc[ix]
+        # print(res)
         # print(res.sum())
         return res
     return f
@@ -150,13 +155,15 @@ def getSubjectionNorm(df):
     res.columns = ['comprehensiveValue', 'comprehensiveLevel']
     return res
 
-#隶属向量转化为评分
+# 隶属向量转化为评分
+
+
 def getSubjectionToScore(s):
     def toScore(subjection):
         w = np.array([0.125, 0.375, 0.625, 0.875][::-1])*100
-        subjection=np.array(subjection)
+        subjection = np.array(subjection)
         return (w*subjection).sum()
-    
+
     return s.apply(toScore)
 
 
@@ -164,8 +171,8 @@ def getSubjectionToScore(s):
 
 
 def getSolution(data):
-    w = [0.14502761, 0.19376159, 0.07834023,
-         0.08007087, 0.06553351, 0.0741867, 0.36307949]
+    w = np.array([0.14502761, 0.19376159, 0.07834023,
+                  0.08007087, 0.06553351, 0.0741867, 0.36307949])
     fdict = getSubjectFunDict()
     d = data.iloc[:, 1:]
     level = pd.DataFrame()
@@ -179,12 +186,15 @@ def getSolution(data):
     #     for y in subjection[x]:
     #         print(y)
     score = subjection.apply(getSubjectionToScore, axis=0)
-    print(score)
+    score.columns = ['crackLengthScore', 'crackWidthScore', 'radiusOfCurvatureScore',
+                     'segmentDislocationScore', 'settlementRateScore', 'convergenceDeformationScore', 'leakageRateScore']
+    subjection = pd.concat([subjection, score], axis=1)
+    # print(subjection)
     subjectionSumm = subjection.apply(getSubjectionSumm(w), axis=1)
     subjectionSumm.columns = ['subjection1',
                               'subjection2', 'subjection3', 'subjection4']
     subjectionNorm = getSubjectionNorm(subjectionSumm)
-    s = pd.concat([level, subjectionSumm, subjectionNorm], axis=1)
+    s = pd.concat([level, score, subjectionSumm, subjectionNorm], axis=1)
     s.index = data.iloc[:, 0]
     return s
 

@@ -60,33 +60,36 @@
 </div>
 
 
+{% for table in datas['data'] %}
 <div class="container">
-    <h4 style="margin-left: 45%;">2019-02-15</h4>
+    <h4 style="margin-left: 45%;">
+        {{ table[0] }}
+    </h4>
     <div class="row">
         <div class="col-xs-1-6" style="width:35%; margin-left: 15%; background-color: lightgray;">
             <ul style="margin-top: 1em;">
                 <li style="display:inline-flex;">隧道区段健康状态综合评分:</li>
                 <li style="display:inline-flex;">
-                    76.61
+                    {{ table[1] }}
                 </li>
             </ul>
 
             <ul>
                 <li style="display:inline-flex;">隧道区段健康状态综合等级:</li>
                 <li style="display:inline-flex;">
-                        Ⅰ 级
+                    {{ table[2] }}
                 </li>
             </ul>
             <ul>
                 <li style="display:inline-flex;">隧道区段主要病害:</li>
                 <li style="display:inline-flex;">
-                    裂缝
+                    {{ table[3] }}
                 </li>
             </ul>
             <ul>
                 <li style="display:inline-flex;">隧道区段维护养护建议:</li>
                 <li style="display:inline-flex;">
-                    日常维护
+                    {{ table[4] }}
                 </li>
             </ul>
         </div>
@@ -94,38 +97,33 @@
             <ul style="margin-top: 1em;">
                 <li style="display:inline-flex;">隧道区段最危险衬砌环:</li>
                 <li style="display:inline-flex;">
-                    34
+                    {{ table[5] }}
                 </li>
             </ul>
 
             <ul>
                 <li style="display:inline-flex;">最危险衬砌环综合评分:</li>
                 <li style="display:inline-flex;">
-                    70.3
+                    {{ table[6] }}
                 </li>
             </ul>
             <ul>
                 <li style="display:inline-flex;">最危险衬砌环综合等级:</li>
                 <li style="display:inline-flex;">
-                        Ⅱ 级
+                    {{ table[7] }}
                 </li>
             </ul>
             <ul>
                 <li style="display:inline-flex;">最危险衬砌环主要病害:</li>
                 <li style="display:inline-flex;">
-                    错台
+                    {{ table[8] }}
                 </li>
             </ul>
         </div>
     </div>
 </div>
 
-
-
-
-
-
-
+{% endfor %}
 
 
 

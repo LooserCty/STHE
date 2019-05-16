@@ -1,9 +1,9 @@
-import sys
 import functools
 import os
+import sys
 
-from flask import (Blueprint, flash, g, redirect, render_template, request, json, jsonify,
-                   session, url_for, current_app)
+from flask import (Blueprint, current_app, flash, g, json, jsonify, redirect,
+                   render_template, request, session, url_for)
 from werkzeug.security import check_password_hash, generate_password_hash
 
 from ..db.db import get_db
@@ -38,7 +38,7 @@ def register():
 
         if error is None:
             createUserDir(username)
-            
+
             db.execute(
                 'INSERT INTO user_t (username, password) VALUES (?, ?)',
                 (username, generate_password_hash(password))

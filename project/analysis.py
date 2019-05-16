@@ -11,12 +11,25 @@ from ..usr.user import login_required
 from .data import getPath
 
 
+def level2Roman(x):
+    tran = {
+        1: 'Ⅰ',
+        2: 'Ⅱ',
+        3: 'Ⅲ',
+        4: 'Ⅳ'
+    }
+    if x in tran:
+        return tran[x]
+    else:
+        return x
+
+
 def getSolution(name, date):
     # date='2019-02-15'
     path = getPath(name)
     spath = path+'solution/'+date+'.csv'
     file = os.path.normpath(spath)
-    data = pd.read_csv(file, engine='python', index_col=0)
+    data = pd.read_csv(file, engine='python', index_col=0, encoding='utf8')
     return data
 
 
@@ -35,18 +48,25 @@ def analysisRealize():
 
     if request.method == 'POST':
         if mode == '1':
-            # date = request.form.get('date')
-            # ringNumber = request.values.get('ringNumber')
-            # return redirect(url_for('project.analysis', name=name, mode=1, date=date, ringNumber=ringNumber))
-
             data = None
             if date:
-                data = getSolution(name, date)
-                data = data.loc[int(ringNumber)]
+                df = getSolution(name, date)
+                _, m = df.shape
+                k = int(ringNumber)
+                data = []
+                for i in range(m):
+                    data.append(df.loc[k][i])
+                for i in range(7):
+                    data[i] = level2Roman(data[i])
+                data[-1] = level2Roman(data[-1])
+                data[7:14] = []
+                # data=pd.Series(data)
+                # data = data.loc[int(ringNumber)]
             if data is not None:
                 datas['data'] = data
                 datas['success'] = True
             return render_template('project/analysis/analysisCompute.html', datas=datas)
+            # return redirect(url_for('project.analysis', name=name, mode=1, date=date, ringNumber=ringNumber))
         else:
             return redirect(url_for('project.analysis', name=name, mode=2))
     else:
@@ -54,4 +74,3 @@ def analysisRealize():
             return render_template('project/analysis/analysisCompute.html', datas=datas)
         else:
             return render_template('project/analysis/analysisBasis.html', datas=datas)
-

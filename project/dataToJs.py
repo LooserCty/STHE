@@ -14,6 +14,7 @@ from ..db.db import get_db
 from ..usr.user import login_required
 from .project import bp
 from .data import getPath
+from .solution import quduanScore
 
 
 @bp.route('/getProjectDateAndType', methods=('GET', 'POST'))
@@ -35,6 +36,7 @@ def getProjectSolutionShow():
     index = ['comprehensiveLevel', 'crackLength', 'crackWidth', 'radiusOfCurvature', 'segmentDislocation',
              'settlementRate', 'convergenceDeformation', 'leakageRate']
     d = dict(zip(types, index))
+    type = '综合评价'
 
     name = request.values.get('name')
     date = request.values.get('date')
@@ -61,8 +63,9 @@ def getProjectCurvePath():
     for date in dates:
         fpath = path+date+'.csv'
         try:
-            data = pd.read_csv(fpath, engine='python')
-            s = data['comprehensiveValue'].mean()
+            data = pd.read_csv(fpath, engine='python', encoding='utf8')
+            s = quduanScore(data['comprehensiveValue'])
+            s = int(s*100)/100
             scores.append(s)
         except OSError:
             print('open solution csv except')
@@ -72,7 +75,8 @@ def getProjectCurvePath():
     fig = plt.figure()
     plt.plot(dates, scores, 'go-')
     plt.grid()
-    plt.rcParams['font.sans-serif'] = ['SimHei']  # 用来正常显示中文标签
+    plt.rcParams['font.family'] = 'sans-serif'
+    plt.rcParams['font.sans-serif'] = 'SimSun,Times New Roman'  # 用来正常显示中文标签
     plt.rcParams['axes.unicode_minus'] = False  # 用来正常显示负号
     plt.xlabel('日期', fontsize=15)
     plt.ylabel('健康状态评分', fontsize=15)
@@ -91,6 +95,3 @@ def getProjectCurvePath():
     print(path)
     data = {'path': path}
     return jsonify(data)
-
-
-

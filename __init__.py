@@ -27,8 +27,6 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    # print(app.instance_path,app.static_url_path, app.static_folder+'/haha', file=sys.stdout)
-
     from .db import db
     db.init_app(app)
 

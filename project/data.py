@@ -45,7 +45,7 @@ def saveProjectDiseaseData(name, date, file):
 
         try:
             fpath = path+'/'+date+'.csv'
-            data = pd.read_csv(fpath, engine='python')
+            data = pd.read_csv(fpath, engine='python', encoding='utf8')
             data = float2point(data)
             data.to_csv(fpath, index=False)
         except:
@@ -64,7 +64,7 @@ def processData(name, date):
     path = getPath(name)
     fpath = path+'disease/'+date+'.csv'
     file = os.path.normpath(fpath)
-    data = pd.read_csv(file, engine='python')
+    data = pd.read_csv(file, engine='python', encoding='utf8')
 
     print(data.shape, file=sys.stdout)
     s = getSolution(data)
@@ -121,19 +121,20 @@ def dataRealize():
             checkDate(name, date)
             if saveProjectDiseaseData(name, date, file):
                 processData(name, date)
-            return redirect(url_for('project.data', name=name, mode=1, date=date))
+
+                path = getPath(name)+'disease'
+                fpath = path+'/'+date+'.csv'
+                file = os.path.normpath(fpath)
+                data = pd.read_csv(file, engine='python', encoding='utf8')
+                datas['data'] = data
+                print('read_csv data', file=sys.stdout)
+            return render_template('project/data/dataImport.html', datas=datas)
+            # return redirect(url_for('project.data', name=name, mode=1, date=date))
         else:
             return redirect(url_for('project.data', name=name, mode=2, date=date))
     else:
         print("GET", file=sys.stdout)
         if mode == '1':
-            if date:
-                path = getPath(name)+'disease'
-                fpath = path+'/'+date+'.csv'
-                file = os.path.normpath(fpath)
-                data = pd.read_csv(file, engine='python')
-                datas['data'] = data
-                print('read_csv data', file=sys.stdout)
             return render_template('project/data/dataImport.html', datas=datas)
         else:
             data = getAllDiseaseData(name)
@@ -144,7 +145,7 @@ def dataRealize():
 def getDataDateData(name, date):
     path = getPath(name)+'disease/'+date+'.csv'
     try:
-        data = pd.read_csv(path, engine='python')
+        data = pd.read_csv(path, engine='python', encoding='utf8')
     except:
         print('open disease csv except')
     return data

@@ -56,7 +56,7 @@ $(function () {
                 // alert("../ok");
                 $(".img-1").prop('src',
                     // "{{ url_for('static',filename='data/'+g.user['username']+'/'+datas['name']+'/solution/image/1.png')|safe }}"
-                    data['path']
+                    data['path'] + '?t=' + Math.random()
                 );
                 // $(".img-2").prop('src',
                 //     "{{ url_for('static',filename='data/'+g.user['username']+'/'+datas['name']+'/solution/image/2.png')|safe }}"
@@ -89,7 +89,7 @@ $(function () {
                 // alert("../ok");
                 $(".img-1").prop('src',
                     // "{{ url_for('static',filename='data/'+g.user['username']+'/'+datas['name']+'/solution/image/1.png')|safe }}"
-                    data['path']
+                    data['path'] + '?t=' + Math.random()
                 );
                 // $(".img-2").prop('src',
                 //     "{{ url_for('static',filename='data/'+g.user['username']+'/'+datas['name']+'/solution/image/2.png')|safe }}"
@@ -146,11 +146,21 @@ $(function () {
 window.onload = function () {
     $(".show").show();
 
+    // var dataShow = {
+    //     name: "{{ datas['name'] }}",
+    //     date: $(".collectDate").val(),
+    //     type: $(".evaluationType").val()
+    // };
+
     var dataShow = {
         name: "{{ datas['name'] }}",
         date: $(".collectDate").val(),
         type: $(".evaluationType").val()
     };
+    // if (dataShow['type']==undefined){
+    //     dataShow['type']='综合评价'
+    // }
+
     $.ajax({
         type: 'get',
         url: 'getProjectSolutionShow',
